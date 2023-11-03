@@ -61,11 +61,11 @@ app.layout = html.Div([
 #TASK 2.4: Creating Callbacks
 # Define the callback function to update the input container based on the selected statistics
 @app.callback(
-    Output(component_id='select-year', component_property='disabled'),
+    Output(component_id='select-year', component_property='value'),
     Input(component_id='dropdown-statistics',component_property='value'))
 
 def update_input_container(selected_statistics):
-    if selected_statistics =='Yearly Statistics': 
+    if selected_statistics =='Yearly Report Statistics': 
         return False
     else: 
         return True
@@ -153,4 +153,3 @@ def update_output_container(selected_statistics, input_year):
 # Run the Dash app
 if __name__ == '__main__':
     app.run_server(debug=True)
-
