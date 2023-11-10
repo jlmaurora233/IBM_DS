@@ -21,15 +21,16 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 # TASK 1: Add a dropdown list to enable Launch Site selection
                                 # The default select value is for ALL sites
                                 # dcc.Dropdown(id='site-dropdown',...)
-                                html.Br(dcc.Dropdown(id='site-dropdown',
-                                                      options=[{'label': 'All Sites', 'value': 'ALL'},
+                                html.Br(),
+                                dcc.Dropdown(id='site-dropdown',
+                                            options=[{'label': 'All Sites', 'value': 'ALL'},
                                                       {'label': 'CCAFS LC-40', 'value': 'CCAFS LC-40'}, 
                                                       {'label': 'VAFB SLC-4E', 'value': 'VAFB SLC-4E'},
                                                       {'label': 'KSC LC-39A', 'value': 'KSC LC-39A'},
                                                       {'label': 'CCAFS SLC-40', 'value': 'CCAFS SLC-40'}],
-                                                      value='ALL',
-                                                      placeholder='Select a Launch Site here',
-                                                      searchable=True)),
+                                            value='ALL',
+                                            placeholder='Select a Launch Site here',
+                                            searchable=True),
 
                                 # TASK 2: Add a pie chart to show the total successful launches count for all sites
                                 # If a specific launch site was selected, show the Success vs. Failed counts for the site
@@ -63,8 +64,9 @@ def get_pie_chart(entered_site):
     else:
         data = filtered_df.loc[filtered_df['Launch Site'] == entered_site]
         fig = px.pie(data, values='class', 
-        names='Launch Site', 
-        title='Total Success Launches ({entered_site})')
+        names='Launch Site',
+        labels={1: 'Success', 0: 'Failure'},
+        title=f'Total Success Launches ({entered_site})')
         return fig
 
 
@@ -84,7 +86,7 @@ def success_payload_scatter_chart(entered_site, payload_range):
     else:
         data = filtered_df.loc[filtered_df['Launch Site'] == entered_site]
         fig = px.scatter(data, x='Payload Mass (kg)', y='class', color='Booster Version Category',
-                        title='Correlation between Payload and Success ({entered_site})')
+                        title=f'Correlation between Payload and Success ({entered_site})')
         return fig
 
 
