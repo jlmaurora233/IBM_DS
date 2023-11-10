@@ -57,14 +57,14 @@ def get_pie_chart(entered_site):
     if entered_site == 'ALL':
         data = filtered_df
         fig = px.pie(data, values='class', 
-        names='pie chart names', 
-        title='title')
+        names='Launch Site', 
+        title='Total Success Launches')
         return fig
     else:
         data = filtered_df.loc[filtered_df['Launch Site'] == entered_site]
         fig = px.pie(data, values='class', 
-        names='pie chart names', 
-        title='title')
+        names='Launch Site', 
+        title='Total Success Launches ({entered_site})')
         return fig
 
 
@@ -72,15 +72,18 @@ def get_pie_chart(entered_site):
 # Add a callback function for `site-dropdown` and `payload-slider` as inputs, `success-payload-scatter-chart` as output
 @app.callback(Output(component_id='success-payload-scatter-chart', component_property='figure'),
             [Input(component_id='site-dropdown', component_property='value'), Input(component_id="payload-slider", component_property="value")])
-def success_payload_scatter_chart(entered_site):
-    filtered_df = spacex_df
+def success_payload_scatter_chart(entered_site, payload_range):
+    lower, upper = payload_range
+    filtered_df = spacex_df[(spacex_df['Payload Mass (kg)'] > lower) & (spacex_df['Payload Mass (kg)'] < upper)]
     if entered_site == 'ALL':
         data = filtered_df
-        fig = px.scatter(data, x='Payload Mass (kg)', y='class', color='Booster Version Category')
+        fig = px.scatter(data, x='Payload Mass (kg)', y='class', color='Booster Version Category',
+                        title='Correlation between Payload and Success (All Sites)')
         return fig
     else:
         data = filtered_df.loc[filtered_df['Launch Site'] == entered_site]
-        fig = px.scatter(data, x='Payload Mass (kg)', y='class', color='Booster Version Category')
+        fig = px.scatter(data, x='Payload Mass (kg)', y='class', color='Booster Version Category',
+                        title='Correlation between Payload and Success ({entered_site})')
         return fig
 
 
