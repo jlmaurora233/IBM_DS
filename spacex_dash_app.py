@@ -71,7 +71,8 @@ def get_pie_chart(entered_site):
 # TASK 4:
 # Add a callback function for `site-dropdown` and `payload-slider` as inputs, `success-payload-scatter-chart` as output
 @app.callback(Output(component_id='success-payload-scatter-chart', component_property='figure'),
-            [Input(component_id='site-dropdown', component_property='value'), Input(component_id="payload-slider", component_property="value")])
+            [Input(component_id='site-dropdown', component_property='value'), 
+            Input(component_id="payload-slider", component_property="value")])
 def success_payload_scatter_chart(entered_site, payload_range):
     lower, upper = payload_range
     filtered_df = spacex_df[(spacex_df['Payload Mass (kg)'] > lower) & (spacex_df['Payload Mass (kg)'] < upper)]
